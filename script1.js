@@ -339,43 +339,7 @@ document.querySelector(".info-icon").classList.toggle("blanco");
 
 
 
-// Confirmar compra con mínimo de unidades
-function confirmPurchase() {
-    const buyerName = document.getElementById('buyer-name').value.trim();
-    const buyerPhone = document.getElementById('buyer-phone').value.trim();
-    const buyerEmail = document.getElementById('buyer-email').value.trim();
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Verificar que todos los campos estén completos
-    if (!buyerName || !buyerPhone || !buyerEmail || cart.length === 0) {
-        alert("Por favor, complete todos los campos y agregue al menos un producto al carrito antes de confirmar la compra.");
-        return;
-    }
-
-    // Verificar cantidad mínima
-    function mostrarMensaje(unidadesFaltantes) {
-        const modal = document.getElementById("mensajeModal");
-        const mensajeTexto = document.getElementById("mensajeTexto");
-        mensajeTexto.innerText = `Te faltan ${unidadesFaltantes} unidades para alcanzar el precio por mayor. Para compras minoristas, consulte el precio por whatsapp.`;
-        modal.style.display = "block";
-    }
-    
-    function cerrarModal() {
-        document.getElementById("mensajeModal").style.display = "none";
-    }
-    
-    // También puedes asegurarte de que el botón esté correctamente vinculado
-    document.getElementById("cerrarBtn").addEventListener("click", cerrarModal);
-    
-    
-    // Verificar cantidad mínima
-    const totalUnits = cart.reduce((acc, product) => acc + product.quantity, 0);
-    if (totalUnits < 3) {
-        const unidadesFaltantes = 3 - totalUnits;
-        mostrarMensaje(unidadesFaltantes);
-        return;
-    }
-    
 
     let cartDetails = `Detalles del Carrito:\n`;
     cart.forEach(product => {
