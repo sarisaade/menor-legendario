@@ -339,8 +339,14 @@ document.querySelector(".info-icon").classList.toggle("blanco");
 
 
 
-// Confirmar compra con mínimo de unidades
-function confirmPurchase() {
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('confirmation-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita el envío del formulario para permitir la redirección
+        confirmPurchaseMinorista();
+    });
+});
+
+function confirmPurchaseMinorista() {
     const buyerName = document.getElementById('buyer-name').value.trim();
     const buyerPhone = document.getElementById('buyer-phone').value.trim();
     const buyerEmail = document.getElementById('buyer-email').value.trim();
@@ -352,70 +358,26 @@ function confirmPurchase() {
         return;
     }
 
-    // Verificar cantidad mínima
-    function mostrarMensaje(unidadesFaltantes) {
-        const modal = document.getElementById("mensajeModal");
-        const mensajeTexto = document.getElementById("mensajeTexto");
-        mensajeTexto.innerText = `Te faltan ${unidadesFaltantes} unidades para alcanzar el precio por mayor. Para compras minoristas, consulte el precio por whatsapp.`;
-        modal.style.display = "block";
-    }
-    
-    function cerrarModal() {
-        document.getElementById("mensajeModal").style.display = "none";
-    }
-    
-    // También puedes asegurarte de que el botón esté correctamente vinculado
-    document.getElementById("cerrarBtn").addEventListener("click", cerrarModal);
-    
-    
-    // Verificar cantidad mínima
-    const totalUnits = cart.reduce((acc, product) => acc + product.quantity, 0);
-    if (totalUnits < 3) {
-        const unidadesFaltantes = 3 - totalUnits;
-        mostrarMensaje(unidadesFaltantes);
-        return;
-    }
-    
-
+    // Construir mensaje para WhatsApp
     let cartDetails = `Detalles del Carrito:\n`;
     cart.forEach(product => {
         cartDetails += `${product.quantity} x ${product.name} (Talle: ${product.talle}) - Precio: $${(product.price * product.quantity).toFixed(2)}\n`;
     });
 
-    setTimeout(() => {
-        const message = `Hola, soy ${buyerName}. Quiero comprar.\nTeléfono: ${buyerPhone}\nEmail: ${buyerEmail}\n${cartDetails}`;
-        const encodedMessage = encodeURIComponent(message);
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        const whatsappURL = isMobile 
-            ? `https://api.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}` 
-            : `https://web.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}`;
+    const message = `Hola, soy ${buyerName}. Quiero comprar sin mínimo de unidades.\nTeléfono: ${buyerPhone}\nEmail: ${buyerEmail}\n${cartDetails}`;
+    const encodedMessage = encodeURIComponent(message);
 
-        window.location.href = whatsappURL;
-    }, 2000);
+    // Detectar si el usuario está en móvil o escritorio
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const whatsappURL = isMobile 
+        ? `https://api.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}` 
+        : `https://web.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}`;
 
-    // Vaciar el carrito y reiniciar el contador
+    // Redirigir automáticamente a WhatsApp
+    window.location.href = whatsappURL;
+
+    // Vaciar el carrito y reiniciar el contador después de la compra
     localStorage.removeItem('cart');
     updateCartCounter();
     displayCart();
 }
-
-
-// Función para actualizar el contador manualmente
-function updateCartCounter() {
-    const cartCounterElement = document.getElementById('cart-counter'); // Ajusta el ID según tu HTML
-    if (cartCounterElement) {
-        cartCounterElement.textContent = "0"; // Reinicia el contador a cero
-    }
-}
-//detectar dispositivo para mensaje de whatsapp
-function detectarDispositivo() {
-    var urlMovil = "whatsapp://send?phone=541154511489";
-    var urlWeb = "https://wa.me/5491154511489";
-
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.location.href = urlMovil;
-    } else {
-      window.location.href = urlWeb;
-    }
-  }
-  
