@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="icon" type="image/png" href="./imagenes/favicon-32x32.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script> (function(){ emailjs.init("z5kLRgpEiDGYL4lhx"); })(); </script>
+
+    
+</head>
+<body>
+   
+      <header>
+        
+          <!-- Sección Hero -->
+<div class="hero">
+  <div class="hero-header">
+     <a href="./index.html" class="logo">
+        <img src="./24FEC762-47F0-4F9E-8F29-CF139B27135F.webp" alt="Logo de LEGENDARIO JEANS">
+     </a>
+     <div class="hero-content">
+      <h1>Legendario Jeans</h1>
+        <p>Por Menor</p>
+      
+      <!--<button onclick="location.href='./productos.html'"><h2>Ver productos</h2></button>-->
+  </div>
+  
+  
+  <a href="./carrito.html" class="cart"><i class="fas fa-shopping-cart"></i>
+    <img id="pant-icon" src="./103083_trousers_icon.png" alt="Pantalón" style="display:none; position:absolute; width:30px; height:auto;">
+    <span class="cart-count">0</span>
+  </a>
+  </div>
+</div>
+
+        </header>
+        
+
+        <main>
+          
+          <h1 class="productos-tittle">Productos</h1>
+          <!-- Buscador con menu desplegable -->
+          <div id="controls-container">
+          <div id="search-container">
+            <label for="search-options">Buscar productos:</label>
+            <select id="search-options">
+                <option value="">-- Seleccione un producto --</option>
+                <option value="ver-todo">Ver todo</option>
+                <option value="clasico">Jean Clásico</option>
+                <option value="jean-oxido">Jean oxido</option>
+                <option value="bull">Bull</option>
+                <option value="blue-black">Blue-Black</option>
+                <option value="sweater">Sweater</option>
+                <option value="campera">Campera</option>
+            </select>
+            <button id="search-button">Buscar</button>
+        </div>
+     <!-- menu para ordenacion-->
+       <div id="sort-container">
+          <label for="sort-options">Ordenar:</label>
+          <select id="sort-options">
+              <option value="precio-asc">Precio: Menor a mayor</option>
+              <option value="precio-desc">Precio: Mayor a menor</option>
+          </select>
+          <button id="sort-button">Ordenar</button>
+      </div>
+    </div>
+    
+        
+          <section class="product-container">
+            
+           
+  <div class="product-card" data-name="jean-clasico">
+    <h2>Jean Clasico</h2>
+    <div class="image-container">
+      <img id="jean-clasico" src="./jean clasico azul front.JPG" alt="Jean Clasico" width="300">
+      <span class="info-text"><img src="icons8-clasificar-derecho-26.png" alt="Siguiente" class="info-icon blanco">
+
+      </span>
+  </div>
+<p>Articulo 01</p>
+
+    <p>Por Menor: $20500</p>
+    <div class="cantidad-container">
+        <label for="talle-201">Talle:</label>
+        <select id="talle-201">
+            <option value="38">38</option>
+            <option value="40">40</option>
+            <option value="42">42</option>
+            <option value="44">44</option>
+            <option value="46">46</option>
+            <option value="48">48</option>
+            <option value="50">50</option>
+            <option value="52">52</option>
+            <option value="54">54</option>
+        </select>
+       
+        <label for="cantidad-201">Cantidad:</label>
+        <input type="number" id="cantidad-201" class="cantidad" value="1" min="1">
+    </div>
+    <button class="add-to-cart" data-id="201">Agregar al carrito</button>
+</div>
+  
+<div class="product-card" data-name="clasico-gris">
+  <h2>Clasico Gris</h2>
+  <div class="image-container">
+    <img id="clasico-gris" src="./clasico gris f.JPG" alt="Jean Clasico Gris" width="300">
+    <span class="info-text"><img src="icons8-clasificar-derecho-26.png" alt="Siguiente" class="info-icon blanco">
+
+    </span>
+</div>
+<p>Articulo 06</p>
+
+  <p>Por Menor: $20500</p>
+  <div class="cantidad-container">
+      <label for="talle-206">Talle:</label>
+      <select id="talle-206">
+          <option value="38">38</option>
+          <option value="40">40</option>
+          <option value="42">42</option>
+          <option value="44">44</option>
+          <option value="46">46</option>
+          <option value="48">48</option>
+          <option value="50">50</option>
+          <option value="52">52</option>
+          <option value="54">54</option>
+      </select>
+     
+      <label for="cantidad-206">Cantidad:</label>
+      <input type="number" id="cantidad-206" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="206">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="clasico-gris-oscuro">
+  <h2>Gris Oscuro</h2>
+  <div class="image-container">
+    <img id="clasico-gris-oscuro" src="./gris oscuro front.JPG" alt="Jean Clasico Gris" width="300">
+    <span class="info-text"><img src="icons8-clasificar-derecho-26.png" alt="Siguiente" class="info-icon blanco">
+
+    </span>
+</div>
+<p>Articulo 03</p>
+
+  <p>Por Menor: $20500</p>
+  <div class="cantidad-container">
+      <label for="talle-206">Talle:</label>
+      <select id="talle-206">
+          <option value="38">38</option>
+          <option value="40">40</option>
+          <option value="42">42</option>
+          <option value="44">44</option>
+          <option value="46">46</option>
+          <option value="48">48</option>
+          <option value="50">50</option>
+          <option value="52">52</option>
+          <option value="54">54</option>
+      </select>
+     
+      <label for="cantidad-203">Cantidad:</label>
+      <input type="number" id="cantidad-203" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="203">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="bull-negro">
+  <h2>Bull Negro</h2>
+  <div class="image-container">
+    <img id="bull-negro" src="./bull negro front.JPG" alt="Bull negro" width="300">
+    <span class="info-text"><img src="icons8-clasificar-derecho-26.png" alt="Siguiente" class="info-icon blanco">
+
+    </span>
+</div>
+<p>Articulo 07</p>
+
+  <p>Por Menor: $22000</p>
+  <div class="cantidad-container">
+      <label for="talle-207">Talle:</label>
+      <select id="talle-207">
+          <option value="38">38</option>
+          <option value="40">40</option>
+          <option value="42">42</option>
+          <option value="44">44</option>
+          <option value="46">46</option>
+          <option value="48">48</option>
+          <option value="50">50</option>
+          <option value="52">52</option>
+          <option value="54">54</option>
+      </select>
+     
+      <label for="cantidad-207">Cantidad:</label>
+      <input type="number" id="cantidad-207" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="207">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="blue-black">
+  <h2>Blue Black</h2>
+  <div class="image-container">
+    <img id="blue-black" src="./blue black.JPG" alt="Jean Blue Black" width="300">
+    <span class="info-text"><img src="icons8-clasificar-derecho-26.png" alt="Siguiente" class="info-icon blanco">
+
+    </span>
+</div>
+<p>Articulo 04</p>
+
+  <p>Por Menor: $20500</p>
+  <div class="cantidad-container">
+      <label for="talle-204">Talle:</label>
+      <select id="talle-204">
+          <option value="38">38</option>
+          <option value="40">40</option>
+          <option value="42">42</option>
+          <option value="44">44</option>
+          <option value="46">46</option>
+          <option value="48">48</option>
+          <option value="50">50</option>
+          <option value="52">52</option>
+          <option value="54">54</option>
+      </select>
+     
+      <label for="cantidad-204">Cantidad:</label>
+      <input type="number" id="cantidad-204" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="204">Agregar al carrito</button>
+</div>
+
+
+
+<div class="product-card" data-name="jean-oxido">
+  <h2>Jean Oxido</h2>
+  <div class="image-container">
+    <img id="jean-oxido" src="./oxido front.JPG" alt="Jean oxido" width="300">
+    <span class="info-text"><img src="icons8-clasificar-derecho-26.png" alt="Siguiente" class="info-icon blanco">
+
+    </span>
+</div>
+<p>Articulo 02</p>
+
+  <p>Por Menor: $20500</p>
+  <div class="cantidad-container">
+      <label for="talle-202">Talle:</label>
+      <select id="talle-202">
+          <option value="38">38</option>
+          <option value="40">40</option>
+          <option value="42">42</option>
+          <option value="44">44</option>
+          <option value="46">46</option>
+          <option value="48">48</option>
+          <option value="50">50</option>
+          <option value="52">52</option>
+          <option value="54">54</option>
+      </select>
+     
+      <label for="cantidad-202">Cantidad:</label>
+      <input type="number" id="cantidad-202" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="202">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="campera-lana-lisa">
+  <h2>Campera Lana con Bolsillo</h2>
+  <div class="image-container">
+    <img id="campera-lana-lisa" src="./campera lana lisa con bolsillo.jpg" alt="Campera lana lisa" width="300">
+    
+</div>
+<p>Articulo 03</p>
+
+  <p>Por Menor: $24000</p>
+  <div class="cantidad-container">
+      <label for="talle-203">Talle:</label>
+      <select id="talle-203">
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+      </select>
+     
+      <label for="cantidad-210">Cantidad:</label>
+      <input type="number" id="cantidad-210" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="210">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="campera-trabajada">
+  <h2>Campera Trabajada</h2>
+  <div class="image-container">
+    <img id="campera-trabajada" src="./campera trabajada bolsillo.jpg" alt="Campera lana lisa" width="300">
+    
+</div>
+<p>Articulo 12</p>
+
+  <p>Por Menor: $24000</p>
+  <div class="cantidad-container">
+      <label for="talle-12">Talle:</label>
+      <select id="talle-12">
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+      </select>
+     
+      <label for="cantidad-12">Cantidad:</label>
+      <input type="number" id="cantidad-12" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="12">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="sweater-trabajado">
+  <h2>Sweater Trabajado</h2>
+  <div class="image-container">
+    <img id="sweater-trabajado" src="./sweater trabajado.jpg" alt="Campera lana lisa" width="300">
+    
+</div>
+<p>Articulo 13</p>
+
+  <p>Por Menor: $22000</p>
+  <div class="cantidad-container">
+      <label for="talle-13">Talle:</label>
+      <select id="talle-13">
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+      </select>
+     
+      <label for="cantidad-13">Cantidad:</label>
+      <input type="number" id="cantidad-13" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="13">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="sweater-trabajado-2">
+  <h2>Sweater Trabajado</h2>
+  <div class="image-container">
+    <img id="sweater-trabajado" src="./sweater trabajado2.jpg" alt="Campera lana lisa" width="300">
+   
+</div>
+<p>Articulo 14</p>
+
+  <p>Por Menor: $22000</p>
+  <div class="cantidad-container">
+      <label for="talle-14">Talle:</label>
+      <select id="talle-14">
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+      </select>
+     
+      <label for="cantidad-14">Cantidad:</label>
+      <input type="number" id="cantidad-14" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="14">Agregar al carrito</button>
+</div>
+
+<div class="product-card" data-name="sweater-trabajado-3">
+  <h2>Sweater Trabajado</h2>
+  <div class="image-container">
+    <img id="sweater-trabajado-3" src="./sweater trabajado 3.jpg" alt="Campera lana lisa" width="300">
+    
+</div>
+<p>Articulo 15</p>
+
+  <p>Por Menor: $21000</p>
+  <div class="cantidad-container">
+      <label for="talle-210">Talle:</label>
+      <select id="talle-210">
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+          
+      </select>
+     
+      <label for="cantidad-15">Cantidad:</label>
+      <input type="number" id="cantidad-15" class="cantidad" value="1" min="1">
+  </div>
+  <button class="add-to-cart" data-id="15">Agregar al carrito</button>
+</div>
+
+
+
+
+
+
+
+         
+            <!-- Agrega más productos aquí -->
+           
+             <!--aca vendran las cards generadas por la api-->
+          </section>
+          <button id="back-to-top" class="back-to-top">↑</button>
+
+<div class="sera invisible" class="oculto">
+         <!----> <div class="cart-container">
+            <h2>Carrito de Compras</h2>
+            <div class="cart-items"></div>
+            <p>Total: $<span class="cart-total">0.00</span></p>
+            <button class="clear-cart">Vaciar Carrito</button>
+            <button onclick="location.href='carrito.html'" class="ver-carrito-btn">Ver Carrito</button>
+          </div>
+          </div>
+          
+        </main>
+        <footer>
+          <div class="footer-info"> 
+            <div class="contact-info"> 
+             
+              <div class="contacto">
+                <h3>Contacto</h3>
+                <p><img src="./telefono.png" alt="Telefono"class=social-icon><a href="tel:+541146122809">+54 11 4612-2809</a>
+                </p> 
+               <p><a href="https://wa.me/541154511489" target="_blank">
+                <img src="./whatsapp.png" alt="WhatsApp" class="social-icon"> Enviar mensaje</a>
+              </p>
+              
+               <p><a href="https://maps.app.goo.gl/2hxNUeELsLzQUU3JA" target="_blank" class="social-icon">📍</a>
+                Legendario Jeans</p>
+               </div> </div>
+               <div class="hours-info"> 
+                <h3>Horarios</h3> <div class="horarios">
+                <p>Lunes a Viernes: 08:00 - 17:00</p> 
+                <p>Sábados: Cerrado</p> 
+                
+                
+              </div> </div><div class="social-info"> <h3>Redes</h3> 
+                <div class="redes">
+                <p>
+                  <a href="https://facebook.com/legendariojeans" target="_blank">
+                  <img src="./facebook.png" alt="Facebook" class="social-icon"> Facebook</a>
+                </p>
+                 <p>
+                  <a href="https://instagram.com/legendariojeans" target="_blank">
+                    <img src="./instagram.png" alt="Instagram" class="social-icon"> 
+                    Instagram</a>
+                  </p>
+                 </div> </div>
+                 
+                 
+                </div> 
+                
+        </footer>
+        
+  
+  
+  <script src="./script1.js"></script>
+  <div id="notification" class="notification"></div>
+
+</body>
+</html>
