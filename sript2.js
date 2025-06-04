@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', initPage);
+function esPaginaMinorista() {
+    return window.location.href.includes("menor-legendario");
+}
+function vaciarCarritoSiEsMinorista() {
+    if (esPaginaMinorista()) {
+        localStorage.removeItem('cart'); // Elimina el carrito
+        localStorage.setItem("cartCount", 0); // Reinicia el contador
+        displayCart(); // Actualiza la interfaz
+    }
+}
+function vaciarCarritoSiEsMinorista() {
+    if (esPaginaMinorista()) {
+        localStorage.removeItem('cart'); // Borra el carrito en localStorage
+        localStorage.setItem("cartCount", 0); // Reinicia el contador a cero
+        document.querySelector('.cart-items').innerHTML = ''; // Vacía la interfaz del carrito
+        document.querySelector('.cart-total').textContent = '0.00'; // Reinicia el total a $0.00
+        updateCartCount(); // Asegura que el contador se actualice correctamente
+    }
+}
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', vaciarCarritoSiEsMinorista);
+
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', vaciarCarritoSiEsMinorista);
 
 function initPage() {
     displayCart();
