@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', initPage);
 function initPage() {
     displayCart();
     updateCartCount();
+    function updateCartIndicator() {
+    let totalCount = localStorage.getItem("cartCount") || 0;
+    document.querySelectorAll(".cart-count").forEach(el => el.textContent = totalCount);
+}
+
 
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', function(event) {
@@ -22,19 +27,22 @@ function initPage() {
 
             if (productTalle && productQuantity > 0) {
                 addToCart(productId, productName, productPrice, productTalle, productQuantity);
-                updateCartIndicator();
+                updateCartCount();
             } else {
                 alert("Selecciona un talle y una cantidad válida.");
             }
         });
     });
 
-    document.querySelector('.clear-cart').addEventListener('click', () => {
+   document.querySelector('.clear-cart').addEventListener('click', () => {
+    if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
         localStorage.removeItem('cart');
         localStorage.setItem("cartCount", 0);
         updateCartCount();
         displayCart();
-    });
+    }
+});
+
 
     document.getElementById('confirmar-carrito-btn').addEventListener('click', () => {
         document.getElementById('dialog').style.display = 'block';
@@ -46,9 +54,10 @@ function initPage() {
     });
 }
 
-// Agregar producto al carrito
 function addToCart(productId, productName, productPrice, productTalle, productQuantity) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log("Carrito antes de agregar:", cart); // 🔹 Verificar si `cart` tiene productos antes de modificarlo
+
     const product = { id: productId, name: productName, price: productPrice, talle: productTalle, quantity: productQuantity };
 
     const existingProduct = cart.find(item => item.id === productId && item.talle === productTalle);
@@ -58,6 +67,8 @@ function addToCart(productId, productName, productPrice, productTalle, productQu
         cart.push(product);
     }
 
+    console.log("Carrito después de agregar:", cart); // 🔹 Verificar si el producto se agregó correctamente
+
     localStorage.setItem('cart', JSON.stringify(cart));
 
     let totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -66,6 +77,8 @@ function addToCart(productId, productName, productPrice, productTalle, productQu
     updateCartCount();
     displayCart();
 }
+
+
 // Función para cambiar el estado del botón
 function changeButtonState(button) {
     button.style.backgroundColor = '#4CAF50'; // Cambiar a verde
@@ -82,7 +95,8 @@ function changeButtonState(button) {
 
 // Mostrar carrito
 function displayCart() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+   let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
     const cartContainer = document.querySelector('.cart-items');
     cartContainer.innerHTML = '';
 
@@ -339,45 +353,149 @@ document.querySelector(".info-icon").classList.toggle("blanco");
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('confirmation-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita el envío del formulario para permitir la redirección
-        confirmPurchaseMinorista();
-    });
-});
-
-function confirmPurchaseMinorista() {
+function confirmPurchase() {
     const buyerName = document.getElementById('buyer-name').value.trim();
     const buyerPhone = document.getElementById('buyer-phone').value.trim();
     const buyerEmail = document.getElementById('buyer-email').value.trim();
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Verificar que todos los campos estén completos
     if (!buyerName || !buyerPhone || !buyerEmail || cart.length === 0) {
-        alert("Por favor, complete todos los campos y agregue al menos un producto al carrito antes de confirmar la compra.");
+        alert("Por favor, completa todos los campos y agrega al menos un producto al carrito antes de confirmar la compra.");
         return;
     }
 
-    // Construir mensaje para WhatsApp
     let cartDetails = `Detalles del Carrito:\n`;
     cart.forEach(product => {
         cartDetails += `${product.quantity} x ${product.name} (Talle: ${product.talle}) - Precio: $${(product.price * product.quantity).toFixed(2)}\n`;
     });
 
-    const message = `Hola, soy ${buyerName}. Quiero comprar sin mínimo de unidades.\nTeléfono: ${buyerPhone}\nEmail: ${buyerEmail}\n${cartDetails}`;
-    const encodedMessage = encodeURIComponent(message);
+    setTimeout(() => {
+        const message = `Hola, soy ${buyerName}. Quiero comprar.\nTeléfono: ${buyerPhone}\nEmail: ${buyerEmail}\n${cartDetails}`;
+        const encodedMessage = encodeURIComponent(message);
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const whatsappURL = isMobile 
+            ? `https://api.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}` 
+            : `https://web.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}`;
 
-    // Detectar si el usuario está en móvil o escritorio
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const whatsappURL = isMobile 
-        ? `https://api.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}` 
-        : `https://web.whatsapp.com/send?phone=5491154511489&text=${encodedMessage}`;
+        window.location.href = whatsappURL;
+    }, 2000);
 
-    // Redirigir automáticamente a WhatsApp
-    window.location.href = whatsappURL;
-
-    // Vaciar el carrito y reiniciar el contador después de la compra
-    localStorage.removeItem('cart');
-    updateCartCounter();
-    displayCart();
+    // ✅ Ahora vacía el carrito DESPUÉS de enviar la información a WhatsApp
+    setTimeout(() => {
+        localStorage.removeItem('cart');
+        localStorage.setItem("cartCount", 0);
+        updateCartCounter();
+        displayCart();
+    }, 5000); // 🔹 Espera 5 segundos antes de vaciar el carrito
 }
+
+function updateCartCounter() {
+    const cartCounterElement = document.getElementById('cart-counter'); // Ajusta el ID según tu HTML
+    if (cartCounterElement) {
+        cartCounterElement.textContent = "0"; // Reinicia el contador a cero
+    }
+}
+
+//detectar dispositivo para mensaje de whatsapp
+function detectarDispositivo() {
+    var urlMovil = "whatsapp://send?phone=541154511489";
+    var urlWeb = "https://wa.me/5491154511489";
+
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.location.href = urlMovil;
+    } else {
+      window.location.href = urlWeb;
+    }
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    displayCart(); // 🔹 Recuperar los datos del carrito guardados en `localStorage`
+});
+
+function displayCart() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || []; // 🔹 Recupera el carrito guardado
+    const cartContainer = document.querySelector('.cart-items');
+    if (!cartContainer) return; // 🔹 Evita errores si el elemento no existe en la página
+
+    cartContainer.innerHTML = '';
+
+    cart.forEach(product => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('cart-item');
+        listItem.innerHTML = `
+            <p>${product.quantity} x ${product.name} (Talle: ${product.talle}) - Precio: $${(product.price * product.quantity).toFixed(2)}</p>
+        `;
+        cartContainer.appendChild(listItem);
+    });
+
+    updateCartTotal();
+}
+
+function updateCartTotal() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartTotalElement = document.querySelector('.cart-total');
+    if (cartTotalElement) {
+        cartTotalElement.textContent = cart.reduce((total, product) => total + (product.price * product.quantity), 0).toFixed(2);
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    displayCart(); // 🔹 Recuperar los datos guardados en `localStorage`
+});
+
+function displayCart() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log("Cargando carrito en carrito.html:", cart); // 🔹 Ver en consola qué datos se están recuperando
+
+    const cartContainer = document.querySelector('.cart-items');
+    if (!cartContainer) return; // 🔹 Evitar errores si el elemento no existe en la página
+
+    cartContainer.innerHTML = '';
+    cart.forEach(product => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('cart-item');
+        listItem.innerHTML = `
+            <p>${product.quantity} x ${product.name} (Talle: ${product.talle}) - Precio: $${(product.price * product.quantity).toFixed(2)}</p>
+        `;
+        cartContainer.appendChild(listItem);
+    });
+
+    updateCartTotal();
+}
+
+function updateCartTotal() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartTotalElement = document.querySelector('.cart-total');
+    if (cartTotalElement) {
+        cartTotalElement.textContent = cart.reduce((total, product) => total + (product.price * product.quantity), 0).toFixed(2);
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Datos en localStorage antes de cargar carrito:", localStorage.getItem('cart'));
+
+    displayCart(); // 🔹 Intenta mostrar los datos guardados
+});
+
+function displayCart() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log("Datos recuperados en carrito.html:", cart); // 🔹 Verifica si los datos existen antes de mostrarlos
+
+    const cartContainer = document.querySelector('.cart-items');
+    if (!cartContainer) return;
+
+    cartContainer.innerHTML = '';
+
+    cart.forEach(product => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('cart-item');
+        listItem.innerHTML = `
+            <p>${product.quantity} x ${product.name} (Talle: ${product.talle}) - Precio: $${(product.price * product.quantity).toFixed(2)}</p>
+        `;
+        cartContainer.appendChild(listItem);
+    });
+
+    updateCartTotal();
+}
+
+document.getElementById("botonCarrito").addEventListener("click", function(event) {
+    event.preventDefault(); // Evita que el enlace abra otra página
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+});

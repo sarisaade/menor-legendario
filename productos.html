@@ -25,13 +25,13 @@
      </a>
      <div class="hero-content">
       <h1>Legendario Jeans</h1>
-        <p>Por Menor</p>
+      <p>Por Menor</p>
       
-      <!--<button onclick="location.href='./productos.html'"><h2>Ver productos</h2></button>-->
+      <!--<button onclick="location.href='./productosMenor.html'"><h2>Ver productos</h2></button>-->
   </div>
   
   
-  <a href="./carrito.html" class="cart"><i class="fas fa-shopping-cart"></i>
+  <a href="#" id="botonCarrito" class="cart"><i class="fas fa-shopping-cart"></i> 
     <img id="pant-icon" src="./103083_trousers_icon.png" alt="Pantalón" style="display:none; position:absolute; width:30px; height:auto;">
     <span class="cart-count">0</span>
   </a>
@@ -85,7 +85,7 @@
   </div>
 <p>Articulo 01</p>
 
-    <p>Por Menor: $20500</p>
+    <p>Por Mayor: $16500</p>
     <div class="cantidad-container">
         <label for="talle-201">Talle:</label>
         <select id="talle-201">
@@ -116,7 +116,7 @@
 </div>
 <p>Articulo 06</p>
 
-  <p>Por Menor: $20500</p>
+  <p>Por Mayor: $16500</p>
   <div class="cantidad-container">
       <label for="talle-206">Talle:</label>
       <select id="talle-206">
@@ -147,7 +147,7 @@
 </div>
 <p>Articulo 03</p>
 
-  <p>Por Menor: $20500</p>
+  <p>Por Menor: $26500</p>
   <div class="cantidad-container">
       <label for="talle-206">Talle:</label>
       <select id="talle-206">
@@ -178,7 +178,7 @@
 </div>
 <p>Articulo 07</p>
 
-  <p>Por Menor: $22000</p>
+  <p>Por Menor: $18000</p>
   <div class="cantidad-container">
       <label for="talle-207">Talle:</label>
       <select id="talle-207">
@@ -209,7 +209,7 @@
 </div>
 <p>Articulo 04</p>
 
-  <p>Por Menor: $20500</p>
+  <p>Por Menor: $21500</p>
   <div class="cantidad-container">
       <label for="talle-204">Talle:</label>
       <select id="talle-204">
@@ -242,7 +242,7 @@
 </div>
 <p>Articulo 02</p>
 
-  <p>Por Menor: $20500</p>
+  <p>Por Menor: $26500</p>
   <div class="cantidad-container">
       <label for="talle-202">Talle:</label>
       <select id="talle-202">
@@ -271,7 +271,7 @@
 </div>
 <p>Articulo 03</p>
 
-  <p>Por Menor: $24000</p>
+  <p>Por Menor: $20000</p>
   <div class="cantidad-container">
       <label for="talle-203">Talle:</label>
       <select id="talle-203">
@@ -295,7 +295,7 @@
 </div>
 <p>Articulo 12</p>
 
-  <p>Por Menor: $24000</p>
+  <p>Por mayor: $20000</p>
   <div class="cantidad-container">
       <label for="talle-12">Talle:</label>
       <select id="talle-12">
@@ -319,7 +319,7 @@
 </div>
 <p>Articulo 13</p>
 
-  <p>Por Menor: $22000</p>
+  <p>Por Mayor: $20000</p>
   <div class="cantidad-container">
       <label for="talle-13">Talle:</label>
       <select id="talle-13">
@@ -343,7 +343,7 @@
 </div>
 <p>Articulo 14</p>
 
-  <p>Por Menor: $22000</p>
+  <p>Por Mayor: $27000</p>
   <div class="cantidad-container">
       <label for="talle-14">Talle:</label>
       <select id="talle-14">
@@ -367,7 +367,7 @@
 </div>
 <p>Articulo 15</p>
 
-  <p>Por Menor: $21000</p>
+  <p>Por Mayor: $17000</p>
   <div class="cantidad-container">
       <label for="talle-210">Talle:</label>
       <select id="talle-210">
@@ -403,9 +403,39 @@
             <div class="cart-items"></div>
             <p>Total: $<span class="cart-total">0.00</span></p>
             <button class="clear-cart">Vaciar Carrito</button>
-            <button onclick="location.href='carrito.html'" class="ver-carrito-btn">Ver Carrito</button>
+            <button id="confirmar-carrito-btn" class="confirmar-carrito-btn">Confirmar Carrito</button>
           </div>
           </div>
+          <!-- Cuadro de diálogo para ingresar datos -->
+<div id="dialog" class="dialog" style="display:none;">
+  
+  <form id="confirmation-form" action="https://formspree.io/f/mpwzdjlz" method="POST" novalidate>
+    <h2>Ingrese sus datos para confirmar la compra</h2>
+    <div class="form-group">
+      <input type="text" id="buyer-name" name="name" placeholder="Nombre" required>
+      <span class="error-message" id="name-error"></span>
+    </div>
+    <div class="form-group">
+      <input type="email" id="buyer-email" name="email" placeholder="Correo Electrónico" required>
+      <span class="error-message" id="email-error"></span>
+    </div>
+    <div class="form-group">
+      <input type="tel" id="buyer-phone" name="phone" placeholder="Teléfono" required>
+      <span class="error-message" id="phone-error"></span>
+    </div>
+    
+    <button type="submit" id="comprar-btn" class="comprar-btn">Comprar</button>
+  </form>
+  <button onclick="location.href='carrito.html'" class="close-btn">&times;</button> <!-- Botón de cierre -->
+ <!-- Mensaje de confirmación estilizado -->
+        <div id="confirmation-message" class="confirmation-message" style="display:none;">
+          <h2>Compra Confirmada</h2>
+          <p> Al hacer clic en el botón de "Comprar", será redirigido a WhatsApp donde podrá confirmar su compra con todos los detalles proporcionados. Le agradecemos por su compra. Si tiene alguna pregunta adicional, no dude en contactarnos. ¡Gracias por confiar en nosotros!</p>
+          <button onclick="document.getElementById('confirmation-message').style.display='none'">Cerrar</button>
+        </div>
+ 
+</div>
+
           
         </main>
         <footer>

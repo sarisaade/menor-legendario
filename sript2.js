@@ -1,30 +1,76 @@
-document.addEventListener('DOMContentLoaded', initPage);
-function esPaginaMinorista() {
-    return window.location.href.includes("menor-legendario");
-}
-function vaciarCarritoSiEsMinorista() {
+document.addEventListener('DOMContentLoaded', () => {
     if (esPaginaMinorista()) {
-        localStorage.removeItem('cart'); // Elimina el carrito
-        localStorage.setItem("cartCount", 0); // Reinicia el contador
-        displayCart(); // Actualiza la interfaz
+        // Verificar si el usuario viene desde la página mayorista
+        const vieneDeMayorista = document.referrer.includes("mayor-legendario");
+        
+        if (vieneDeMayorista) {
+            // Si viene de la página mayorista, vaciar el carrito solo una vez
+            localStorage.removeItem('cart');
+            localStorage.setItem("cartCount", 0);
+            localStorage.setItem("carritoVaciado", "true"); // Evitar que se borre otra vez
+        }
+
+        displayCart(); // Actualizar la interfaz
     }
+});
+
+// Función para mostrar el carrito correctamente en carrito.html
+function displayCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.querySelector('.cart-items');
+    cartContainer.innerHTML = '';
+
+    cart.forEach(product => {
+        const listItem = document.createElement('div');
+        listItem.classList.add('cart-item');
+        listItem.innerHTML = `
+            <button class="decrease-quantity" data-id="${product.id}" data-talle="${product.talle}">-</button>
+            <p>${product.quantity} x ${product.name} (Talle: ${product.talle}) - Precio: $${(product.price * product.quantity).toFixed(2)}</p>
+            <button class="increase-quantity" data-id="${product.id}" data-talle="${product.talle}">+</button>
+        `;
+        cartContainer.appendChild(listItem);
+    });
+
+    updateCartTotal();
 }
-function vaciarCarritoSiEsMinorista() {
-    if (esPaginaMinorista()) {
-        localStorage.removeItem('cart'); // Borra el carrito en localStorage
-        localStorage.setItem("cartCount", 0); // Reinicia el contador a cero
-        document.querySelector('.cart-items').innerHTML = ''; // Vacía la interfaz del carrito
-        document.querySelector('.cart-total').textContent = '0.00'; // Reinicia el total a $0.00
-        updateCartCount(); // Asegura que el contador se actualice correctamente
+
+// Función para actualizar el total del carrito
+function updateCartTotal() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartTotal = cart.reduce((total, product) => total + (product.price * product.quantity), 0);
+    document.querySelector('.cart-total').textContent = cartTotal.toFixed(2);
+}
+
+// Agregar productos en la página minorista sin que desaparezcan en carrito.html
+function addToCart(productId, productName, productPrice, productTalle, productQuantity) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const product = { id: productId, name: productName, price: productPrice, talle: productTalle, quantity: productQuantity };
+
+    const existingProduct = cart.find(item => item.id === productId && item.talle === productTalle);
+    if (existingProduct) {
+        existingProduct.quantity += productQuantity;
+    } else {
+        cart.push(product);
     }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    let totalUnits = cart.reduce((acc, item) => acc + item.quantity, 0);
+    localStorage.setItem("cartCount", totalUnits);
+
+    updateCartCount();
+    displayCart();
 }
 
-// Ejecutar al cargar la página
-document.addEventListener('DOMContentLoaded', vaciarCarritoSiEsMinorista);
+// Enlace a carrito.html que guarda los datos antes de cambiar de página
+document.querySelector(".ver-carrito").addEventListener("click", (event) => {
+    event.preventDefault(); // Evita recarga completa
 
+    // Guarda el carrito antes de redirigir
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = "carrito.html";
+});
 
-// Ejecutar al cargar la página
-document.addEventListener('DOMContentLoaded', vaciarCarritoSiEsMinorista);
 
 function initPage() {
     displayCart();
